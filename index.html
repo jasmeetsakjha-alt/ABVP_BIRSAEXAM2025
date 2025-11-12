@@ -9,144 +9,96 @@
   <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
 
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
-    * {
-      box-sizing: border-box;
-    }
     body {
-      font-family: 'Poppins', sans-serif;
-      background: linear-gradient(135deg, #5b7fff, #33ccff);
+      font-family: 'Poppins', 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #f3f6ff, #dee4ff);
       margin: 0;
       padding: 0;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: flex-start;
+      color: #222;
     }
-
     .container {
-      width: 95%;
-      max-width: 850px;
-      background: rgba(255, 255, 255, 0.95);
-      border-radius: 20px;
+      max-width: 900px;
       margin: 50px auto;
-      padding: 35px 45px;
-      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
-      backdrop-filter: blur(10px);
-      animation: fadeIn 0.8s ease-in-out;
+      background: #ffffff;
+      border-radius: 20px;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+      padding: 40px;
     }
-
-    @keyframes fadeIn {
-      from {opacity: 0; transform: translateY(20px);}
-      to {opacity: 1; transform: translateY(0);}
-    }
-
     h1 {
       text-align: center;
       color: #1a237e;
-      font-size: 1.9rem;
-      margin-bottom: 8px;
+      font-size: 2em;
+      margin-bottom: 10px;
     }
-    p.subtitle {
-      text-align: center;
-      color: #333;
-      font-weight: 500;
-      margin-bottom: 20px;
+    h3 {
+      color: #303f9f;
+      margin-top: 20px;
     }
-
     label {
       display: block;
       font-weight: 600;
       margin-top: 12px;
-      color: #1a237e;
+      color: #333;
     }
-
     input, select, textarea {
       width: 100%;
-      padding: 12px;
+      padding: 10px;
       margin-top: 6px;
-      border: 2px solid #c5cae9;
-      border-radius: 10px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
       font-size: 15px;
-      transition: all 0.3s ease;
+      box-sizing: border-box;
     }
-
-    input:focus, select:focus, textarea:focus {
-      outline: none;
-      border-color: #3949ab;
-      box-shadow: 0 0 8px rgba(57, 73, 171, 0.3);
-    }
-
-    textarea {
-      resize: vertical;
-    }
-
+    textarea { resize: vertical; }
     .btn {
-      background: linear-gradient(135deg, #3949ab, #303f9f);
+      background: #3f51b5;
       color: white;
-      padding: 14px;
+      padding: 12px 20px;
       border: none;
-      border-radius: 12px;
+      border-radius: 10px;
       margin-top: 25px;
       cursor: pointer;
       width: 100%;
-      font-size: 17px;
-      font-weight: 600;
-      letter-spacing: 0.5px;
+      font-size: 16px;
       transition: all 0.3s ease;
     }
-
     .btn:hover {
-      transform: scale(1.02);
-      box-shadow: 0 5px 15px rgba(57, 73, 171, 0.4);
+      background: #2e3b8e;
+      transform: translateY(-2px);
     }
-
-    .qr-box {
-      text-align: center;
-      background: #eef1ff;
-      padding: 20px;
-      border-radius: 14px;
-      margin-top: 15px;
-      border: 1px solid #c5cae9;
-    }
-
-    .qr-box img {
-      width: 190px;
-      height: 190px;
-      border-radius: 12px;
-      border: 2px solid #303f9f;
-      margin-top: 10px;
-    }
-
     .admit {
       margin-top: 30px;
-      background: #f8f9ff;
-      border-left: 5px solid #303f9f;
-      padding: 18px 22px;
+      border: 1px dashed #777;
+      padding: 20px;
       border-radius: 12px;
+      background: #fafafa;
     }
-
+    .qr-box {
+      text-align: center;
+      background: #f0f3ff;
+      padding: 20px;
+      border-radius: 15px;
+      margin-top: 15px;
+      border: 1px solid #ccd3ff;
+    }
+    .qr-box img {
+      width: 200px;
+      height: 200px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
     footer {
       text-align: center;
-      color: white;
-      font-size: 14px;
-      padding: 20px;
-      opacity: 0.8;
-      letter-spacing: 0.3px;
-    }
-
-    .credit {
-      text-align: center;
-      margin-top: 15px;
-      font-size: 13px;
       color: #555;
-      opacity: 0.8;
+      padding: 20px;
+      font-size: 14px;
+      margin-top: 30px;
     }
-
-    .credit span {
-      color: #1a237e;
-      font-weight: 600;
+    footer span {
+      display: block;
+      margin-top: 5px;
+      font-size: 13px;
+      color: #777;
     }
   </style>
 </head>
@@ -171,6 +123,7 @@
       const [loading, setLoading] = useState(false);
       const [admitHtml, setAdmitHtml] = useState(null);
 
+      // ✅ Apps Script Web App URL
       const BACKEND_URL = "https://script.google.com/macros/s/AKfycbxS6FChyMzlpsVkuPYp6y8rZum_aOLwKUh12WfMVZi27giamcpKpX_lPpS3asP56loS/exec";
 
       function onChange(e) {
@@ -194,6 +147,7 @@
 
         setLoading(true);
         let b64 = null;
+
         if (screenshotFile) {
           b64 = await readFileAsDataURL(screenshotFile);
         }
@@ -208,9 +162,9 @@
           const j = await resp.json();
           if (j.ok) {
             setAdmitHtml(j.admitHtml);
-            alert("✅ रजिस्ट्रेशन सफल रहा! नीचे प्रवेश पत्र देखें।");
+            alert("रजिस्ट्रेशन सफल रहा! नीचे प्रवेश पत्र देखें।");
           } else {
-            alert("❌ Error: " + (j.error || "Unknown"));
+            alert("Error: " + (j.error || "Unknown"));
           }
         } catch (err) {
           alert("Network error: " + err.message);
@@ -228,9 +182,12 @@
       }
 
       return (
+        <>
         <div className="container">
-          <h1>“हमर बिरसा” सामान्य ज्ञान प्रतियोगिता</h1>
-          <p className="subtitle">अखिल भारतीय विद्यार्थी परिषद, कोडरमा द्वारा आयोजित</p>
+          <h1>"हमर बिरसा" सामान्य ज्ञान प्रतियोगिता</h1>
+          <p style={{ textAlign: "center", color: "#555", fontSize: "15px" }}>
+            अखिल भारतीय विद्यार्थी परिषद, कोडरमा द्वारा आयोजित
+          </p>
 
           <form onSubmit={handleSubmit}>
             <label>नाम</label>
@@ -257,50 +214,63 @@
             <input name="mobile" value={form.mobile} onChange={onChange} required />
 
             <label>पता</label>
-            <textarea name="address" value={form.address} onChange={onChange} rows="3"></textarea>
+            <textarea
+              name="address"
+              value={form.address}
+              onChange={onChange}
+              rows="3"
+            ></textarea>
 
             <h3>💰 पेमेंट जानकारी</h3>
             <div className="qr-box">
               <p>UPI ID: <strong>9798789203@ptyes</strong></p>
-              <img src="https://i.ibb.co/bmGBYfw/ATUL-SCANNER.png" alt="UPI QR" />
+              <img
+                src="https://i.ibb.co/Z1bNvCf7/ATUL-SCANNER.png"
+                alt="UPI QR"
+              />
               <p>कृपया पेमेंट करें और Transaction ID दर्ज करें।</p>
             </div>
 
             <label>Transaction ID</label>
-            <input name="transactionId" value={form.transactionId} onChange={onChange} required />
+            <input
+              name="transactionId"
+              value={form.transactionId}
+              onChange={onChange}
+              required
+            />
 
             <label>Payment Screenshot (अपलोड करें)</label>
             <input type="file" accept="image/*" onChange={onFile} />
 
             <button className="btn" disabled={loading}>
-              {loading ? "⏳ कृपया प्रतीक्षा करें..." : "🚀 Submit करें और प्रवेश पत्र देखें"}
+              {loading ? "कृपया प्रतीक्षा करें..." : "Submit करें और प्रवेश पत्र देखें"}
             </button>
           </form>
 
           {admitHtml && (
             <div className="admit">
-              <h3>🎫 प्रवेश पत्र (Preview)</h3>
+              <h3>प्रवेश पत्र (Preview)</h3>
               <div dangerouslySetInnerHTML={{ __html: admitHtml }}></div>
-              <button className="btn" style={{ marginTop: "10px" }} onClick={() => window.print()}>
-                🖨 Print / Save as PDF
+              <button
+                className="btn"
+                style={{ marginTop: "10px" }}
+                onClick={() => window.print()}
+              >
+                Print / Save as PDF
               </button>
             </div>
           )}
-
-          <div className="credit">
-            🌐 Web design by <span>Jasmeet Saluja</span>
-          </div>
         </div>
+
+        <footer>
+          © 2025 हमर बिरसा प्रतियोगिता | अखिल भारतीय विद्यार्थी परिषद, कोडरमा
+          <span>🌐 Web Design by <strong>Jasmeet Saluja</strong></span>
+        </footer>
+        </>
       );
     }
 
     ReactDOM.createRoot(document.getElementById("root")).render(<App />);
   </script>
-
-  <footer>
-    © 2025 हमर बिरसा प्रतियोगिता | अखिल भारतीय विद्यार्थी परिषद, कोडरमा
-    <br />
-    <small style="opacity:0.7;">Web design by <strong>Jasmeet Saluja</strong></small>
-  </footer>
 </body>
 </html>
