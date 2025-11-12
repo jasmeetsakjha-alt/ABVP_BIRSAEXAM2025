@@ -135,6 +135,19 @@
       opacity: 0.8;
       letter-spacing: 0.3px;
     }
+
+    .credit {
+      text-align: center;
+      margin-top: 15px;
+      font-size: 13px;
+      color: #555;
+      opacity: 0.8;
+    }
+
+    .credit span {
+      color: #1a237e;
+      font-weight: 600;
+    }
   </style>
 </head>
 <body>
@@ -249,7 +262,7 @@
             <h3>💰 पेमेंट जानकारी</h3>
             <div className="qr-box">
               <p>UPI ID: <strong>9798789203@ptyes</strong></p>
-              <img src="https://i.ibb.co/QvX0xZh/ATUL-SCANNER.png" alt="UPI QR" />
+              <img src="https://i.ibb.co/bmGBYfw/ATUL-SCANNER.png" alt="UPI QR" />
               <p>कृपया पेमेंट करें और Transaction ID दर्ज करें।</p>
             </div>
 
@@ -273,6 +286,10 @@
               </button>
             </div>
           )}
+
+          <div className="credit">
+            🌐 Web design by <span>Jasmeet Saluja</span>
+          </div>
         </div>
       );
     }
@@ -280,6 +297,10 @@
     ReactDOM.createRoot(document.getElementById("root")).render(<App />);
   </script>
 
-  <footer>© 2025 हमर बिरसा प्रतियोगिता | अखिल भारतीय विद्यार्थी परिषद, कोडरमा</footer>
+  <footer>
+    © 2025 हमर बिरसा प्रतियोगिता | अखिल भारतीय विद्यार्थी परिषद, कोडरमा
+    <br />
+    <small style="opacity:0.7;">Web design by <strong>Jasmeet Saluja</strong></small>
+  </footer>
 </body>
 </html>
