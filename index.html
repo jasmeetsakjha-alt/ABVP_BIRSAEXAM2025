@@ -1,40 +1,39 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="hi">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>हमर बिरसा - सामान्य ज्ञान प्रतियोगिता</title>
-
   <style>
     body {
-      font-family: 'Poppins', 'Segoe UI', sans-serif;
-      background: linear-gradient(135deg, #f3f6ff, #dee4ff);
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #e8ecff, #f0f4ff);
       margin: 0;
       padding: 0;
-      color: #222;
     }
     .container {
       max-width: 900px;
-      margin: 50px auto;
-      background: #ffffff;
-      border-radius: 20px;
+      margin: 40px auto;
+      background: #fff;
+      border-radius: 16px;
       box-shadow: 0 10px 40px rgba(0,0,0,0.1);
-      padding: 40px;
+      padding: 30px 40px;
     }
     h1 {
       text-align: center;
       color: #1a237e;
-      font-size: 2em;
       margin-bottom: 10px;
     }
-    h3 {
-      color: #303f9f;
-      margin-top: 20px;
+    p.sub {
+      text-align: center;
+      color: #444;
+      margin-top: 0;
+      font-size: 15px;
     }
     label {
       display: block;
       font-weight: 600;
-      margin-top: 12px;
+      margin-top: 10px;
       color: #333;
     }
     input, select, textarea {
@@ -48,74 +47,68 @@
     }
     textarea { resize: vertical; }
     .btn {
-      background: #3f51b5;
+      background: #3949ab;
       color: white;
       padding: 12px 20px;
       border: none;
-      border-radius: 10px;
-      margin-top: 25px;
+      border-radius: 8px;
+      margin-top: 20px;
       cursor: pointer;
       width: 100%;
       font-size: 16px;
-      transition: all 0.3s ease;
     }
     .btn:hover {
-      background: #2e3b8e;
-      transform: translateY(-2px);
+      background: #303f9f;
     }
     .admit {
-      margin-top: 30px;
-      border: 1px dashed #777;
-      padding: 20px;
-      border-radius: 12px;
+      margin-top: 25px;
+      border: 1px dashed #666;
+      padding: 15px;
+      border-radius: 10px;
       background: #fafafa;
     }
     .qr-box {
       text-align: center;
-      background: #f0f3ff;
+      background: #f5f5f5;
       padding: 20px;
-      border-radius: 15px;
+      border-radius: 12px;
       margin-top: 15px;
-      border: 1px solid #ccd3ff;
     }
     .qr-box img {
       width: 200px;
       height: 200px;
       border-radius: 10px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
       object-fit: contain;
     }
     footer {
       text-align: center;
-      color: #555;
+      color: #666;
       padding: 20px;
       font-size: 14px;
-      margin-top: 30px;
     }
-    footer span {
-      display: block;
-      margin-top: 5px;
+    .footer-credit {
+      text-align: center;
+      color: #888;
       font-size: 13px;
-      color: #777;
+      margin-top: 15px;
     }
   </style>
 </head>
 <body>
+
   <div class="container">
-    <h1>"हमर बिरसा" सामान्य ज्ञान प्रतियोगिता</h1>
-    <p style="text-align: center; color: #555; font-size: 15px;">
-      अखिल भारतीय विद्यार्थी परिषद, कोडरमा द्वारा आयोजित
-    </p>
+    <h1>“हमर बिरसा” सामान्य ज्ञान प्रतियोगिता</h1>
+    <p class="sub">अखिल भारतीय विद्यार्थी परिषद, कोडरमा द्वारा आयोजित</p>
 
     <form id="regForm">
       <label>नाम</label>
-      <input name="name" required />
+      <input name="name" required>
 
       <label>शिक्षा</label>
-      <input name="education" />
+      <input name="education">
 
       <label>स्कूल / कॉलेज</label>
-      <input name="school" />
+      <input name="school">
 
       <label>लिंग</label>
       <select name="gender">
@@ -126,10 +119,10 @@
       </select>
 
       <label>ईमेल</label>
-      <input name="email" />
+      <input name="email" type="email">
 
       <label>मोबाइल</label>
-      <input name="mobile" required />
+      <input name="mobile" type="tel" required>
 
       <label>पता</label>
       <textarea name="address" rows="3"></textarea>
@@ -142,7 +135,7 @@
       </div>
 
       <label>Transaction ID</label>
-      <input name="transactionId" required />
+      <input name="transactionId" required>
 
       <label>Payment Screenshot (अपलोड करें)</label>
       <input type="file" id="screenshot" accept="image/*" />
@@ -150,33 +143,29 @@
       <button type="submit" class="btn">Submit करें और प्रवेश पत्र देखें</button>
     </form>
 
-    <div id="admitBox" class="admit" style="display:none;">
-      <h3>प्रवेश पत्र (Preview)</h3>
-      <div id="admitContent"></div>
-      <button class="btn" style="margin-top:10px;" onclick="window.print()">Print / Save as PDF</button>
-    </div>
+    <div id="admitCard" class="admit" style="display:none;"></div>
+
+    <div class="footer-credit">Web Design by <strong>Jasmeet Saluja</strong></div>
   </div>
 
-  <footer>
-    © 2025 हमर बिरसा प्रतियोगिता | अखिल भारतीय विद्यार्थी परिषद, कोडरमा
-    <span>🌐 Web Design by <strong>Jasmeet Saluja</strong></span>
-  </footer>
+  <footer>© 2025 हमर बिरसा प्रतियोगिता | अखिल भारतीय विद्यार्थी परिषद, कोडरमा</footer>
 
   <script>
     const BACKEND_URL = "https://script.google.com/macros/s/AKfycbxS6FChyMzlpsVkuPYp6y8rZum_aOLwKUh12WfMVZi27giamcpKpX_lPpS3asP56loS/exec";
 
-    const form = document.getElementById("regForm");
-    const admitBox = document.getElementById("admitBox");
-    const admitContent = document.getElementById("admitContent");
-
-    form.addEventListener("submit", async (e) => {
+    document.getElementById("regForm").addEventListener("submit", async (e) => {
       e.preventDefault();
 
-      const data = Object.fromEntries(new FormData(form).entries());
+      const formData = new FormData(e.target);
       const file = document.getElementById("screenshot").files[0];
 
-      if (!data.name || !data.mobile || !data.transactionId) {
-        alert("कृपया सभी आवश्यक जानकारी भरें।");
+      if (!formData.get("name") || !formData.get("mobile")) {
+        alert("कृपया नाम और मोबाइल नंबर भरें।");
+        return;
+      }
+
+      if (!formData.get("transactionId")) {
+        alert("कृपया Transaction ID भरें।");
         return;
       }
 
@@ -185,24 +174,25 @@
         b64 = await toBase64(file);
       }
 
+      const data = Object.fromEntries(formData.entries());
       data.screenshotBase64 = b64;
 
       try {
         const res = await fetch(BACKEND_URL, {
           method: "POST",
-          body: JSON.stringify(data),
+          body: JSON.stringify(data)
         });
-
         const j = await res.json();
         if (j.ok) {
-          admitContent.innerHTML = j.admitHtml;
-          admitBox.style.display = "block";
+          document.getElementById("admitCard").style.display = "block";
+          document.getElementById("admitCard").innerHTML = j.admitHtml + `
+            <button class="btn" onclick="window.print()" style="margin-top:10px;">Print / Save as PDF</button>`;
           alert("रजिस्ट्रेशन सफल रहा!");
         } else {
           alert("Error: " + (j.error || "Unknown"));
         }
       } catch (err) {
-        alert("Network error: " + err.message);
+        alert("Network Error: " + err.message);
       }
     });
 
