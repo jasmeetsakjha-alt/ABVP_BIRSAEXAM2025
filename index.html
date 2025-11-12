@@ -4,9 +4,6 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>हमर बिरसा - सामान्य ज्ञान प्रतियोगिता</title>
-  <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
-  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
-  <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
 
   <style>
     body {
@@ -86,6 +83,7 @@
       height: 200px;
       border-radius: 10px;
       box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      object-fit: contain;
     }
     footer {
       text-align: center;
@@ -103,174 +101,119 @@
   </style>
 </head>
 <body>
-  <div id="root"></div>
+  <div class="container">
+    <h1>"हमर बिरसा" सामान्य ज्ञान प्रतियोगिता</h1>
+    <p style="text-align: center; color: #555; font-size: 15px;">
+      अखिल भारतीय विद्यार्थी परिषद, कोडरमा द्वारा आयोजित
+    </p>
 
-  <script type="text/babel">
-    const { useState } = React;
+    <form id="regForm">
+      <label>नाम</label>
+      <input name="name" required />
 
-    function App() {
-      const [form, setForm] = useState({
-        name: "",
-        education: "",
-        school: "",
-        gender: "",
-        email: "",
-        mobile: "",
-        address: "",
-        transactionId: "",
-      });
-      const [screenshotFile, setScreenshotFile] = useState(null);
-      const [loading, setLoading] = useState(false);
-      const [admitHtml, setAdmitHtml] = useState(null);
+      <label>शिक्षा</label>
+      <input name="education" />
 
-      // ✅ Apps Script Web App URL
-      const BACKEND_URL = "https://script.google.com/macros/s/AKfycbxS6FChyMzlpsVkuPYp6y8rZum_aOLwKUh12WfMVZi27giamcpKpX_lPpS3asP56loS/exec";
+      <label>स्कूल / कॉलेज</label>
+      <input name="school" />
 
-      function onChange(e) {
-        setForm({ ...form, [e.target.name]: e.target.value });
+      <label>लिंग</label>
+      <select name="gender">
+        <option value="">चुनें</option>
+        <option value="पुरुष">पुरुष</option>
+        <option value="महिला">महिला</option>
+        <option value="अन्य">अन्य</option>
+      </select>
+
+      <label>ईमेल</label>
+      <input name="email" />
+
+      <label>मोबाइल</label>
+      <input name="mobile" required />
+
+      <label>पता</label>
+      <textarea name="address" rows="3"></textarea>
+
+      <h3>💰 पेमेंट जानकारी</h3>
+      <div class="qr-box">
+        <p>UPI ID: <strong>9798789203@ptyes</strong></p>
+        <img src="https://i.ibb.co/Z1bNvCf7/ATUL-SCANNER.png" alt="UPI QR" />
+        <p>कृपया पेमेंट करें और Transaction ID दर्ज करें।</p>
+      </div>
+
+      <label>Transaction ID</label>
+      <input name="transactionId" required />
+
+      <label>Payment Screenshot (अपलोड करें)</label>
+      <input type="file" id="screenshot" accept="image/*" />
+
+      <button type="submit" class="btn">Submit करें और प्रवेश पत्र देखें</button>
+    </form>
+
+    <div id="admitBox" class="admit" style="display:none;">
+      <h3>प्रवेश पत्र (Preview)</h3>
+      <div id="admitContent"></div>
+      <button class="btn" style="margin-top:10px;" onclick="window.print()">Print / Save as PDF</button>
+    </div>
+  </div>
+
+  <footer>
+    © 2025 हमर बिरसा प्रतियोगिता | अखिल भारतीय विद्यार्थी परिषद, कोडरमा
+    <span>🌐 Web Design by <strong>Jasmeet Saluja</strong></span>
+  </footer>
+
+  <script>
+    const BACKEND_URL = "https://script.google.com/macros/s/AKfycbxS6FChyMzlpsVkuPYp6y8rZum_aOLwKUh12WfMVZi27giamcpKpX_lPpS3asP56loS/exec";
+
+    const form = document.getElementById("regForm");
+    const admitBox = document.getElementById("admitBox");
+    const admitContent = document.getElementById("admitContent");
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const data = Object.fromEntries(new FormData(form).entries());
+      const file = document.getElementById("screenshot").files[0];
+
+      if (!data.name || !data.mobile || !data.transactionId) {
+        alert("कृपया सभी आवश्यक जानकारी भरें।");
+        return;
       }
 
-      function onFile(e) {
-        setScreenshotFile(e.target.files[0] || null);
+      let b64 = null;
+      if (file) {
+        b64 = await toBase64(file);
       }
 
-      async function handleSubmit(ev) {
-        ev.preventDefault();
-        if (!form.name || !form.mobile) {
-          alert("कृपया नाम और मोबाइल नंबर भरें।");
-          return;
-        }
-        if (!form.transactionId) {
-          alert("कृपया पेमेंट के बाद Transaction ID दर्ज करें।");
-          return;
-        }
+      data.screenshotBase64 = b64;
 
-        setLoading(true);
-        let b64 = null;
-
-        if (screenshotFile) {
-          b64 = await readFileAsDataURL(screenshotFile);
-        }
-
-        const payload = { ...form, screenshotBase64: b64 };
-
-        try {
-          const resp = await fetch(BACKEND_URL, {
-            method: "POST",
-            body: JSON.stringify(payload),
-          });
-          const j = await resp.json();
-          if (j.ok) {
-            setAdmitHtml(j.admitHtml);
-            alert("रजिस्ट्रेशन सफल रहा! नीचे प्रवेश पत्र देखें।");
-          } else {
-            alert("Error: " + (j.error || "Unknown"));
-          }
-        } catch (err) {
-          alert("Network error: " + err.message);
-        }
-        setLoading(false);
-      }
-
-      function readFileAsDataURL(file) {
-        return new Promise((res, rej) => {
-          const fr = new FileReader();
-          fr.onload = () => res(fr.result);
-          fr.onerror = rej;
-          fr.readAsDataURL(file);
+      try {
+        const res = await fetch(BACKEND_URL, {
+          method: "POST",
+          body: JSON.stringify(data),
         });
+
+        const j = await res.json();
+        if (j.ok) {
+          admitContent.innerHTML = j.admitHtml;
+          admitBox.style.display = "block";
+          alert("रजिस्ट्रेशन सफल रहा!");
+        } else {
+          alert("Error: " + (j.error || "Unknown"));
+        }
+      } catch (err) {
+        alert("Network error: " + err.message);
       }
+    });
 
-      return (
-        <>
-        <div className="container">
-          <h1>"हमर बिरसा" सामान्य ज्ञान प्रतियोगिता</h1>
-          <p style={{ textAlign: "center", color: "#555", fontSize: "15px" }}>
-            अखिल भारतीय विद्यार्थी परिषद, कोडरमा द्वारा आयोजित
-          </p>
-
-          <form onSubmit={handleSubmit}>
-            <label>नाम</label>
-            <input name="name" value={form.name} onChange={onChange} required />
-
-            <label>शिक्षा</label>
-            <input name="education" value={form.education} onChange={onChange} />
-
-            <label>स्कूल / कॉलेज</label>
-            <input name="school" value={form.school} onChange={onChange} />
-
-            <label>लिंग</label>
-            <select name="gender" value={form.gender} onChange={onChange}>
-              <option value="">चुनें</option>
-              <option value="पुरुष">पुरुष</option>
-              <option value="महिला">महिला</option>
-              <option value="अन्य">अन्य</option>
-            </select>
-
-            <label>ईमेल</label>
-            <input name="email" value={form.email} onChange={onChange} />
-
-            <label>मोबाइल</label>
-            <input name="mobile" value={form.mobile} onChange={onChange} required />
-
-            <label>पता</label>
-            <textarea
-              name="address"
-              value={form.address}
-              onChange={onChange}
-              rows="3"
-            ></textarea>
-
-            <h3>💰 पेमेंट जानकारी</h3>
-            <div className="qr-box">
-              <p>UPI ID: <strong>9798789203@ptyes</strong></p>
-              <img
-                src="https://i.ibb.co/Z1bNvCf7/ATUL-SCANNER.png"
-                alt="UPI QR"
-              />
-              <p>कृपया पेमेंट करें और Transaction ID दर्ज करें।</p>
-            </div>
-
-            <label>Transaction ID</label>
-            <input
-              name="transactionId"
-              value={form.transactionId}
-              onChange={onChange}
-              required
-            />
-
-            <label>Payment Screenshot (अपलोड करें)</label>
-            <input type="file" accept="image/*" onChange={onFile} />
-
-            <button className="btn" disabled={loading}>
-              {loading ? "कृपया प्रतीक्षा करें..." : "Submit करें और प्रवेश पत्र देखें"}
-            </button>
-          </form>
-
-          {admitHtml && (
-            <div className="admit">
-              <h3>प्रवेश पत्र (Preview)</h3>
-              <div dangerouslySetInnerHTML={{ __html: admitHtml }}></div>
-              <button
-                className="btn"
-                style={{ marginTop: "10px" }}
-                onClick={() => window.print()}
-              >
-                Print / Save as PDF
-              </button>
-            </div>
-          )}
-        </div>
-
-        <footer>
-          © 2025 हमर बिरसा प्रतियोगिता | अखिल भारतीय विद्यार्थी परिषद, कोडरमा
-          <span>🌐 Web Design by <strong>Jasmeet Saluja</strong></span>
-        </footer>
-        </>
-      );
+    function toBase64(file) {
+      return new Promise((res, rej) => {
+        const reader = new FileReader();
+        reader.onload = () => res(reader.result);
+        reader.onerror = rej;
+        reader.readAsDataURL(file);
+      });
     }
-
-    ReactDOM.createRoot(document.getElementById("root")).render(<App />);
   </script>
 </body>
 </html>
